@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/x-icon" href="logo.png" class="never_mind" />
+    <link href="https://unpkg.com/boxicons@2.1.1/css/boxicons.min.css" rel="stylesheet" />
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.6.2/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/live/3.1/firebase.js"></script>
+    <link rel="stylesheet" href="Main_style.css" />
+    <title>GoChat</title>
+</head>
+
+<body>
+    <div class="grid">
+        <svg class="grid-svg" xmlns="http://www.w3.org/2000/svg" width="982" height="786" viewBox="0 0 982 786"
+            fill="none">
+            <path fill-rule="evenodd" clip-rule="evenodd"
+                d="M490 401V537H348.5V401H490ZM490 785.5V676H348.5V785.5H347.5V676H206V785.5H205V676H63.5V785.5H62.5V676H0V675H62.5V538H0V537H62.5V401H0V400H62.5V258H0V257H62.5V116H0V115H62.5V0H63.5V115L205 115V0H206V115L347.5 115V0H348.5V115H490V0H491V115L627.5 115V0H628.5V115H765V0H766V115L902.5 115V0H903.5V115H982V116H903.5V257H982V258H903.5V400H982V401H903.5V537H982V538H903.5V675H982V676H903.5V785.5H902.5V676H766V785.5H765V676H628.5V785.5H627.5V676H491V785.5H490ZM902.5 675V538H766V675H902.5ZM902.5 537V401H766V537H902.5ZM902.5 400V258H766V400H902.5ZM902.5 257V116L766 116V257H902.5ZM627.5 675H491V538H627.5V675ZM765 675H628.5V538H765V675ZM348.5 675H490V538H348.5V675ZM347.5 538V675H206V538H347.5ZM205 538V675H63.5V538H205ZM765 537V401H628.5V537H765ZM765 400V258H628.5V400H765ZM765 257V116H628.5V257H765ZM347.5 401V537H206V401H347.5ZM205 401V537H63.5V401H205ZM627.5 401V537H491V401H627.5ZM627.5 116L491 116V257H627.5V116ZM627.5 258H491V400H627.5V258ZM63.5 257V116L205 116V257H63.5ZM63.5 400V258H205V400H63.5ZM206 116V257H347.5V116L206 116ZM348.5 116V257H490V116H348.5ZM206 400V258H347.5V400H206ZM348.5 258V400H490V258H348.5Z"
+                fill="url(#paint0_radial_1_8)" />
+            <defs>
+                <radialGradient id="paint0_radial_1_8" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse"
+                    gradientTransform="translate(491 392.75) rotate(90) scale(513.25 679.989)">
+                    <stop stop-color="white" stop-opacity="0.2" />
+                    <stop offset="1" stop-color="#000" stop-opacity="0" />
+                </radialGradient>
+            </defs>
+        </svg>
+        <div class="blur"></div>
+    </div>
+    <!-- main -->
+    <nav class="sidebar">
+        <header>
+            <div class="image-text">
+                <span class="image">
+                    <img class="my_img" id="user_img" src="logo.png" alt="" />
+                </span>
+
+                <div class="text logo-text">
+                    <span class="name">GoChat</span>
+                    <span class="profession" id="usertext" onload="text_call()"></span>
+                </div>
+            </div>
+            <i class="bx bx-chevron-right toggle" style="display: none"></i>
+        </header>
+
+        <div class="menu-bar">
+            <div class="menu" id="menu">
+                <li class="search-box" style="display: none">
+                    <i class="bx bx-search icon"></i>
+                    <input type="text" placeholder="Search Ganes..." />
+                </li>
+
+                <ul class="menu-links">
+                    <li class="nav-link" id="chat">
+                        <a href="#" id="roomHomeBtn" onclick="homeOpen()">
+                            <i class="bx bx-conversation icon"></i>
+                            <span class="text nav-text">Chat</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link" id="search" onclick="hideall()">
+                        <a href="#">
+                            <i class="bx bx-search-alt icon"></i>
+                            <span class="text nav-text">Search</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link" id="details">
+                        <a href="#" id="roomDetailsBtn">
+                            <i class="bx bx-message-detail icon"></i>
+                            <span class="text nav-text">Room Details</span>
+                        </a>
+                    </li>
+
+                    <li class="nav-link" id="profile">
+                        <a href="#" onclick="profile_show()">
+                            <i class="bx bx-user-circle icon"></i>
+                            <span class="text nav-text">Profile</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="bottom-content">
+                <li class="logout">
+                    <a href="#">
+                        <i class="bx bx-log-out icon" style="margin-left: -2px"></i>
+                        <span class="text nav-text">Logout</span>
+                    </a>
+                </li>
+
+                <li class="mode">
+                    <div class="sun-moon">
+                        <i class="bx bx-moon icon moon"></i>
+                        <i class="bx bx-sun icon sun"></i>
+                    </div>
+                    <span class="mode-text text">Dark mode</span>
+
+                    <div class="toggle-switch">
+                        <span class="switch"></span>
+                    </div>
+                </li>
+            </div>
+        </div>
+    </nav>
+    <div class="contain_time" id="time_bottom">
+        <div class="time_text">
+            <p id="timetext">hello</p>
+        </div>
+    </div>
+    <!-- chat room  -->
+    <section class="home" id="home">
+        <div class="space"></div>
+        <div class="top_details" id="top_details" style="display: none">
+            <img src="" alt="pic" id="pro_pic_display" />
+            <span id="user_name_sender-reciver"></span>
+            <i class="bx bx-dots-vertical-rounded icon_more" onclick="show_more()"></i>
+        </div>
+        <div class="output" id="output" style="text-align: left; margin-bottom: 70px; display: none"></div>
+        <i class="bx bx-chevron-down down_icon" id="down_icon" onclick="scrollToBottom()"></i>
+        <div id="ad" class="output ad" style="margin-bottom: 70px; display: block">
+            <img src="logo.png" alt=".logo" width="200px"
+                style="opacity: 0.7; filter: drop-shadow(2px 2px 5px grey)" /><br />
+            <span class="gradient-text">GoChat</span>
+            <p style="color: var(--text-dark-light)">Hey👋👋!!..</p>
+            <br />
+            <p style="color: var(--text-dark-light); width: 80%; margin: auto">
+                No Chats are selected, try finding the person in the Chats or Search
+                them...
+            </p>
+            <p style="color: var(--text-dark-light); width: 80%; margin: auto">
+                Can't find the Person?? Share the
+                <a href="" style="color: var(--text-link); text-decoration: none">Invite Link</a>
+            </p>
+        </div>
+        <div class="contain">
+            <div class="microbtn">
+                <i class="bx bx-image-add icon icon_pin" onclick="clickattach()"></i>
+                <input type="file" name="files[]" id="files" />
+            </div>
+            <div class="send" style="display: flex">
+                <input type="text" id="msg" class="input_msg" placeholder="Message" autocomplete="off" />
+                <div class="sendbtn" onclick="send()">
+                    <i class="bx bx-send icon send_icon"></i>
+                </div>
+            </div>
+            <div class="microbtn" id="btn_microphone">
+                <i class="bx bx-microphone icon icon_micro" id="rec_btn"></i>
+            </div>
+            <div class="record" id="record" style="display: none;">
+                <i class='bx bx-x icon_no' id="btn_discard"></i>
+                <p class="time_rec" id="time_rec">00:00</p>
+                <i class='bx bxs-circle icon_play' id="icon_play"></i>
+                <div class="main_voice" id="main_voice" style="display: block;">
+                    <div class="visualizer">
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                        <div class="bar"></div>
+                    </div>
+                    <div class="visualizer2">
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                        <div class="bar2"></div>
+                    </div>
+                </div>
+                <input type="range" class="range_rec" id="range_rec" style="display: none;">
+                <div class="play-pause">
+                    <i class='bx bx-play icon_play_main' style="display: none;" id="play_rec_btn"></i>
+                </div>
+                <div class=" sendbtn_mic voicesend" id="pause_rec_btn">
+                    <i class="bx bx-send icon send_icon_mic"></i>
+                </div>
+            </div>
+
+
+            <!-- <div class="app">
+                <audio id="audio" controls></audio>
+            </div> -->
+
+
+        </div>
+    </section>
+    <div class="overlay" id="overlay">
+        <div class="popup" id="popup">
+            <h2>Upload this Image ...</h2>
+            <p>
+                Would you like to share this image, <br />
+                you can delet it also....
+            </p>
+            <img id="myimg" width="200px" height="auto" /><br />
+            <div class="send_pop">
+                <div class="sendbtn" id="upload" onclick="uploadImage()">
+                    <i class="bx bx-send icon send_icon"></i>
+                </div>
+                <div class="sendbtn" id="cancel" onclick="cancelImage()">
+                    <h2 class="text_cancel_btn">Cancel...</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay_del over_del" id="overlay_del">
+        <div class="popup_del pop_del" id="popup_del">
+            <h2 id="del_text">Clear This Chat with ?</h2>
+            <p>Messages would not be accessible...</p>
+            <div class="send_pop send_pop_del">
+                <div class="sendbtn" id="upload" onclick="delChat()">
+                    <i class="bx bx-check send_icon"></i>
+                </div>
+                <div class="sendbtn" id="cancel" onclick="cancelDelChat()">
+                    <h2 class="text_cancel_btn">Cancel...</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay overlay_more" id="overlay_more">
+        <div class="popup popup_more" id="popup_more">
+            <ul>
+                <li class="more clear" onclick="deleteChat()">
+                    <i class="bx bx-comment-x icon_m"></i>Clear Chat
+                </li>
+                <li class="more mute" onclick="muteChat()">
+                    <i class="bx bx-volume-mute icon_m"></i>Mute
+                </li>
+                <li class="more delete" onclick="deleteChat()">
+                    <i class="bx bx-user-x icon_m"></i>Delete Chat
+                </li>
+                <li class="more detail" onclick="userDetails()">
+                    <i class="bx bxs-user-detail icon_m"></i>User Details
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="overlay_user_id" id="overlay_user_id">
+        <div class="popup_user_id" id="popup_user_id">
+            <div class="left_user">
+                <h2>Search User..</h2>
+                <div class="nav-link-user" id="user_search">
+                    <i class="bx bx-arrow-back icon" onclick="hide_popup()"></i>
+                    <input type="text" class="search" onkeyup="searchUsers()" id="search_box" placeholder="User Id"
+                        autocomplete="off" />
+                    <br />
+                </div>
+                <div class="user_output" id="user_output" style="display: none"></div>
+            </div>
+            <div class="right_user">
+                <h2>User not Found ?</h2>
+                <img src="user_not.png" width="200px" height="200px" alt="404 not found"
+                    style="margin-top: 40px; opacity: 0.8" />
+                <h4 style="font-weight: normal">
+                    Hey👋 Aren't able to find your friend??
+                </h4>
+                <p>
+                    Share this
+                    <a href="" style="color: var(--text-link); text-decoration: none">Invite Link</a>
+                    and experience a free chat...
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay overlay_img" id="overlay_img">
+        <div class="popup popup_img" id="popup_img">
+            <h2 id="img_tag_text"></h2>
+            <div class="align_img">
+                <i class="bx bx-chevron-left"></i>
+                <img id="myimg_image" /><br />
+                <i class="bx bx-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="overlay overlay_user" id="overlay_user">
+        <div class="popup popup_user" id="popup_user">
+            <h2 id="user_tag_text"></h2>
+            <div class="align_img">
+                <i class="bx bx-chevron-left"></i>
+                <img id="myimg_image" /><br />
+                <i class="bx bx-chevron-right"></i>
+            </div>
+        </div>
+    </div>
+
+    <section id="profile_sec" class="profile_sec" style="display: none">
+        <div class="container_img_user_profile">
+            <div class="overlay_user_profile">
+                <div class="card">
+                    <img id="my_pro_logo" src="logo.png" alt="" width="150px" height="150px"
+                        style="border-radius: 1000px" />
+                    <div id="my_pro_text" class="card_content">This is the content</div>
+                </div>
+                <h1 class="user_id_text">Your User Profile Card</h1>
+            </div>
+        </div>
+        <div class="profile_content" id="profile_content">
+            <h1 class="main_text_main" id="test_user_pro">Hello, Hello</h1>
+        </div>
+    </section>
+    <!-- bg -->
+    <audio src="send.mp3" id="sendsound"></audio>
+    <audio src="recieve.mp3" id="getsound"></audio>
+    <script src="Main_script.js"></script>
+</body>
+
+</html>
